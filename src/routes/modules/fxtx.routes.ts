@@ -4,7 +4,7 @@ import {
   handleGetAllFxTxsByWalletAddress,
   handleGetFxTxByHash,
   handleGetFxTxById,
-  handleUpdateFxTxStatus,
+  handleUpdateFxTx,
 } from "../../controllers/fxtx.controller";
 import { validateRequest } from "../../middlewares/validateRequest";
 import { apiAuth } from "../../middlewares/apiAuth";
@@ -33,7 +33,7 @@ fxtxRouter.put(
     params: updateFxTxParamsSchema,
     body: updateFxTxStatusSchema,
   }),
-  handleUpdateFxTxStatus
+  handleUpdateFxTx
 );
 
 fxtxRouter.get(

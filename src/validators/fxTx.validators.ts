@@ -10,11 +10,12 @@ export const FxTxStatus = z.enum([
 export const createFxTxSchema = z.object({
   walletAddress: z.string().trim().min(1, "Wallet address is required"),
   chain: z.string().trim().min(1, "Chain is required"),
-  hash: z.string().trim().min(1, "Hash is required"),
+  approveHash: z.string().trim().min(1).optional(),
+  swapHash: z.string().trim().min(1).optional(),
   fromToken: z.string().trim().min(1, "From token is required"), // symbol (USDV, NGNV, BRLV, etc.)
   toToken: z.string().trim().min(1, "To token is required"), // symbol (USDV, NGNV, BRLV, etc.)
   fromAmount: z.coerce.number().min(1, "From amount is required"),
-  toAmount: z.coerce.number().min(1, "To amount is required"),
+  // toAmount: z.coerce.number().min(1, "To amount is required"),
   status: z.enum(FxTxStatus.options).default(FxTxStatus.options[0]),
   // Optional to allow DB to auto-generate when omitted
   timestamp: z.string().datetime().optional(), // ISO timestamp (from block)

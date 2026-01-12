@@ -18,23 +18,31 @@ export async function handleCreateFxTx(
   }
 }
 
-export async function handleUpdateFxTxStatus(
+export async function handleUpdateFxTx(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
   try {
-    const { id } = req.params as { id: string };
-    const { status } = req.body as { status: FxTxStatus };
+    const { id } = req.params;
+
+    const { status, approveHash, swapHash } = req.body;
+
+    const updatePayload = JSON.parse(
+      JSON.stringify({ status, approveHash, swapHash })
+    );
+
     const fxtx = await FxTxModel.findByIdAndUpdate(
       id,
-      { status },
+      { $set: updatePayload },
       { new: true }
     )
       .lean()
       .exec();
 
-    res.status(200).json({ success: true, data: fxtx });
+    if (!fxtx) return res.status(404).json({ error: "Transaction not found" });
+
+    res.json({ success: true, data: fxtx });
   } catch (error) {
     next(error);
   }
