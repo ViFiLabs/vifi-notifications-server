@@ -4,7 +4,8 @@ export const FxTxStatus = z.enum([
   "INITIATED",
   "APPROVED",
   "CONFIRMED",
-  "FAILED",
+  "APPROVE_FAILED",
+  "SWAP_FAILED",
 ]);
 
 export const createFxTxSchema = z.object({
