@@ -27,7 +27,7 @@ fxtxRouter.post(
   handleCreateFxTx
 );
 
-fxtxRouter.put(
+fxtxRouter.patch(
   "/:id",
   validateRequest({
     params: updateFxTxParamsSchema,
