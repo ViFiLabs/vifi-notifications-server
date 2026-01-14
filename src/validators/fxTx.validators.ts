@@ -49,7 +49,9 @@ export const updateFxTxParamsSchema = z.object({
     .regex(/^[a-fA-F0-9]{24}$/, "FxTx id must be a valid MongoDB ObjectId"),
 });
 
-// Body schema to update only the status
+// Body schema to update the status and hashes
 export const updateFxTxStatusSchema = z.object({
   status: FxTxStatus,
+  approveHash: z.string().optional(),
+  swapHash: z.string().optional(),
 });
