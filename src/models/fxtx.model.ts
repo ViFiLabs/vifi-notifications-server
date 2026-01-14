@@ -52,7 +52,7 @@ const fxtxSchema = new Schema<FxTxDocument>(
 // Ensure deduplication of the same tx on a chain
 // fxtxSchema.index({ chain: 1, hash: 1 }, { unique: true });
 
-fxtxSchema.index({ chain: 1, swapHash: 1 }, { unique: true, sparse: true });
-fxtxSchema.index({ chain: 1, approveHash: 1 }, { unique: true, sparse: true });
+fxtxSchema.index({ swapHash: 1 }, { unique: true, sparse: true });
+fxtxSchema.index({ approveHash: 1 }, { unique: true, sparse: true });
 
 export const FxTxModel = model<FxTxDocument>("FxTx", fxtxSchema);
