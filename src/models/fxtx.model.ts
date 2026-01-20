@@ -10,7 +10,8 @@ export enum FxTxStatus {
 export interface FxTxDocument extends mongoose.Document {
   walletAddress: string;
   chain: string;
-  hash: string;
+  approveHash: string;
+  swapHash: string;
   fromToken: string;
   toToken: string;
   fromAmount: number;
@@ -27,11 +28,12 @@ const fxtxSchema = new Schema<FxTxDocument>(
       lowercase: true,
     },
     chain: { type: String, required: true },
-    hash: { type: String, required: true },
+    approveHash: { type: String, required: false, default: "" },
+    swapHash: { type: String, required: false, default: "" },
     fromToken: { type: String, required: true, lowercase: true },
     toToken: { type: String, required: true, lowercase: true },
     fromAmount: { type: Number, required: true },
-    toAmount: { type: Number, required: true },
+    // toAmount: { type: Number, required: true },
     status: {
       type: String,
       required: true,
@@ -48,6 +50,9 @@ const fxtxSchema = new Schema<FxTxDocument>(
 );
 
 // Ensure deduplication of the same tx on a chain
-fxtxSchema.index({ chain: 1, hash: 1 }, { unique: true });
+// fxtxSchema.index({ chain: 1, hash: 1 }, { unique: true });
+
+fxtxSchema.index({ swapHash: 1 }, { unique: true, sparse: true });
+fxtxSchema.index({ approveHash: 1 }, { unique: true, sparse: true });
 
 export const FxTxModel = model<FxTxDocument>("FxTx", fxtxSchema);
